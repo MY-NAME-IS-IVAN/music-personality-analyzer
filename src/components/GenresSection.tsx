@@ -7,29 +7,43 @@ import {
   ChartOptions,
   ChartData,
 } from 'chart.js';
+import { TrackData } from '../types/trackData';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GenresSections = () => {
+interface ArtistsSectionProps {
+  tracks: TrackData[];
+}
+
+const ArtistsSection: React.FC<ArtistsSectionProps> = ({ tracks }) => {
+  // Calculate artist frequencies
+  const artistFrequencies = tracks.reduce((acc, track) => {
+    const artists = track.artistNames.split(',').map(artist => artist.trim());
+    artists.forEach(artist => {
+      acc[artist] = (acc[artist] || 0) + 1;
+    });
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Get top 5 artists
+  const topArtists = Object.entries(artistFrequencies)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5);
+
+  // Calculate total tracks for percentage
+  const totalTracks = tracks.length;
+
   const data: ChartData<'doughnut'> = {
-    labels: [
-      'rap',
-      'hip hop',
-      'rock',
-      'east coast hip hop',
-      'classic rock',
-      'other',
-    ],
+    labels: topArtists.map(([artist]) => artist),
     datasets: [
       {
-        data: [27.3, 13.6, 13.6, 9.1, 9.1, 27.3],
+        data: topArtists.map(([, count]) => (count / totalTracks) * 100),
         backgroundColor: [
           '#FF6384',
           '#36A2EB',
           '#FFCE56',
           '#4BC0C0',
           '#9966FF',
-          '#E0E0E0',
         ],
         hoverBackgroundColor: [
           '#FF91A4',
@@ -37,7 +51,6 @@ const GenresSections = () => {
           '#FFE182',
           '#76D2D2',
           '#B388FF',
-          '#F0F0F0',
         ],
       },
     ],
@@ -75,18 +88,18 @@ const GenresSections = () => {
       </div>
       <div>
         <h2 className='mb-2 text-xl font-bold text-gray-800'>
-          Favorite Genres
+          Favorite Artists
         </h2>
         <ul className='list-none space-y-1 text-sm text-gray-700 sm:text-base'>
-          <li>Rap</li>
-          <li>Hip Hop</li>
-          <li>Rock</li>
-          <li>East Coast Hip Hop</li>
-          <li>Classic Rock</li>
+          {topArtists.map(([artist, count]) => (
+            <li key={artist}>
+              {artist} ({count} tracks)
+            </li>
+          ))}
         </ul>
       </div>
     </section>
   );
 };
 
-export default GenresSections;
+export default ArtistsSection;

@@ -1,16 +1,21 @@
-const RecommendationsDescription = () => {
+import { AnalysisComponentProps } from '../types/analysis';
+
+const RecommendationsDescription: React.FC<AnalysisComponentProps> = ({ text, isLoading }) => {
   return (
-    <div className='mb-10 rounded-xl bg-gray-50 p-6 shadow sm:p-8'>
-      <h2 className='mb-2 text-xl font-bold text-gray-800'>
-        Recommendations For You
+    <section className="mb-6 sm:mb-8 rounded-xl bg-white p-3 sm:p-6 shadow-sm">
+      <h2 className="mb-3 sm:mb-4 text-base sm:text-xl font-bold text-gray-800">
+        Music Recommendations
       </h2>
-      <p className='text-gray-700'>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic quaerat
-        sed eum optio quod similique. Molestiae quo officiis optio officia?
-        Accusamus totam eos tempore est in impedit. Ullam, officiis rem. Minus
-        natus qui illo accusantium obcaecati quo inventore facere?
-      </p>
-    </div>
+      {isLoading ? (
+        <div className="flex items-center justify-center py-6 sm:py-8">
+          <div className="h-6 w-6 sm:h-8 sm:w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
+        </div>
+      ) : (
+        <p className="whitespace-pre-wrap text-sm sm:text-lg text-gray-700">
+          {text}
+        </p>
+      )}
+    </section>
   );
 };
 

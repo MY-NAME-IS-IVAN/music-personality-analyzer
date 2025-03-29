@@ -1,14 +1,21 @@
-import React from 'react';
-
-const WebsiteSummary = () => {
+const WebsiteSummary: React.FC = () => {
   return (
-    <p className='mb-8 text-center text-sm text-gray-600 sm:text-base'>
-      Music Personality Analyzer is a web tool that analyzes your Spotify
-      playlist and provides unique insights based on 10 key audio attributes
-      like danceability, energy, and tempo. Export your playlist, upload it, and
-      let AI reveal patterns in your music taste. Completely open-source and
-      privacy-friendly.
-    </p>
+    <section 
+      className="mb-8 text-center"
+      aria-labelledby="summary-heading"
+    >
+      <h2 
+        id="summary-heading"
+        className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl"
+      >
+        Discover Your Music Personality
+      </h2>
+      <p className="mx-auto max-w-2xl text-base text-gray-600 sm:text-lg">
+        Upload your Spotify playlist and let our AI analyze your music taste to reveal insights 
+        about your personality. Get personalized music recommendations based on your unique 
+        musical preferences.
+      </p>
+    </section>
   );
 };
 
