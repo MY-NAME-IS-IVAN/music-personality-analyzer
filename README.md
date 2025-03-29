@@ -26,5 +26,3 @@ When you export your Spotify playlist, the AI analyzes **10 key attributes** for
 I **do not store or collect any user data**. This is a **personal, open-source project** deployed using **GitHub Pages**.
 
 Feel free to explore, contribute, or customize it for your own use.  
-
----
